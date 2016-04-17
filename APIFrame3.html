@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+</HEAD>
+<BODY>
+	
+	<div id="FrontPic">
+		<div id="Picture"><img width="1000" height="711" src="./Family_Home.png"></div>
+	</div>
+		
+	<script>
+	//Add event listener event for when cotnent has loaded
+	document.addEventListener('DOMContentLoaded', bindButtons);
+	document.addEventListener('DOMContentLoaded', hideDivs);
+
+	function bindButtons(){
+		document.getElementById('Picture').addEventListener('click', unhideData);
+}
+
+	function hideDivs(){
+	document.getElementById('divside').style.display = "none";
+	}
+	
+	function unhideData(){
+		document.getElementById('divside').style.display = "block";
+		document.getElementById('FrontPic').style.display = "none";
+		getData();
+	}
+
+function getData(){
+
+	var data = new FormData();
+	data.append("url", "http://web.engr.oregonstate.edu/~broedera/onedayfieldtripb.pdf");
+	data.append("apikey", "290e936a-b103-4fd2-8ddb-6934a4a27e1e");
+
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function () {
+	  if (this.readyState === 4) {
+		document.getElementById('result').innerHTML=this.responseText;
+	  }
+	});
+
+	xhr.open("POST", "https://api.havenondemand.com/1/api/sync/viewdocument/v1");
+
+	xhr.send(data);
+	}
+	
+	
+	function parseFormCreation(){
+		var i;
+		var stringPair;
+		
+		$("#result div").each(function(){
+			
+			stringPair = $( this ).text().split(":");
+			if(stringPair[1]!=null){
+				$( this).html(stringPair[0] + ': <input type="text" name="' + stringPair[0] + '"></input>');
+			}
+		});
+	}
+	
+	function addToFields(selectedUser){
+		if(selectedUser)
+			userName=selectedUser;
+		else console.log("Error");
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/"+userName);
+		
+		firebaseDB.on("value",function(snap){
+			
+			outputJSON = snap.val();
+			console.log(outputJSON);
+			$("#result input").each(function(){
+				currAttr = $(this).attr('name').replace(/[.,\/#!\"-$%\^&'?\*;:{}=\-_`’~–()]/g,"");
+				if (outputJSON.hasOwnProperty(currAttr))
+					$( this ).val( outputJSON[currAttr] );
+			});
+		},function(errorObject){
+			console.log("READ FAILED: "+errorObject.code);
+		});
+	}
+	
+	function parseFormSubmission(){
+		var i;
+		var jsonString='{"name":"' + userName + '"';
+		
+		$("#result input").each(function(){
+			var splitPair;
+			var attrName = $( this ).attr('name');
+			attrName = attrName.replace(/[.,\/#!-\"?$%\^&\*;:{}=\-_`~'’–()]/g,"");
+			
+			jsonString += ',"' + attrName;
+			jsonString += '":"';
+			jsonString += $( this ).val()+'"';
+			
+		});
+		
+		jsonString += '}';
+		
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/"+userName);
+		console.log(jsonString);
+		firebaseDB.update(JSON.parse(jsonString));
+	}
+	
+	function populateFamily(){
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/FAMILY_REF");
+		
+		firebaseDB.on("value",function(snap){
+			
+			outputJSON = snap.val();
+			console.log(outputJSON);
+			var i=0
+			for(i;outputJSON[i]!=null;i++){
+				$("#invisidiv").append( '<div class="fam_select" id="fs'+i+'"><p>' + outputJSON[i] + '</p></div>' );
+				$("#fs"+i).click(function(){
+					parseFormCreation();
+					console.log($(this).text());
+					addToFields($(this).text());
+					slideBarRight();
+				});
+			
+			}
+			
+		},function(errorObject){
+			console.log("READ FAILED: "+errorObject.code)
+		});
+	}
+	
+	function slideBarRight(){
+		$("#invisidiv").animate({left:"110%"},600,function(){
+			$("#maximizeBar").show();
+			$("#maximizeBar").click(function(){
+				slideBarOut();
+			});
+		});
+	}
+	
+	function slideBarOut(){
+		$("#maximizeBar").hide();
+		$("#invisidiv").animate({left:"100%"},600,function(){
+			
+		});
+	}
+	
+	populateFamily();
+	
+	</script>
+	<style>
+		#invisidiv{
+			position:fixed;
+			top:50%;
+			left:100%;
+			transform:translate(-100%,-50%);
+		}
+	
+		.fam_select{
+			position:relative;
+			display:inline-block;
+			background-color:black;
+			
+			text-align:center;
+			
+			margin-top:1em;
+			width:5em;
+			height:5em;
+			
+			color:white;
+			border:.2em solid black;
+			border-radius:50%;
+		}.fam_select:hover{
+			background-color:white;
+			border:.2em solid black;
+
+		}
+		#maximizeBar{
+			position:fixed;
+			float:right;
+			
+			width:2em;
+			height:2em;
+			top:50%;
+			left:100%;
+			transform:translate(-100%,-50%);
+			
+			color:white;
+			background-color:black;
+		}#submitButton{
+			position:fixed;
+			left:85%;
+			top:85%;
+			width:10%;
+			height:10%;
+		}#addForm{
+			position: absolute;
+			right: 300px;
+			top: 5px;
+		}#FrontPic{
+		position:absolute;
+			height:100%;
+			width:100%;
+		}img{
+			position:relative;
+			left: 200px;
+		}
+	</style>
+	
+		
+	<div id="divside">
+	<div id="result"></div>
+	<div id="invisidiv">
+	</div>
+	<div id="maximizeBar" hidden>+</div>
+	<button id="submitButton" onclick="parseFormSubmission();">Submit</button>
+	</div>
+
+</html>
