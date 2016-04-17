@@ -76,7 +76,7 @@ app.get('/first', function(req,res){
 
 // Redirect
 app.get('/APIFrame2', function(req,res){
-    res.sendFile(path.join(__dirname + '/APIFrame2.html'));
+    res.sendFile(path.join(__dirname + '/APIFrame3.html'));
 });
 
 app.get('/html', function(req, res) {
