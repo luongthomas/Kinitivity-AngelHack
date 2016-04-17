@@ -6,11 +6,206 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+	//Add event listener event for when cotnent has loaded
+	document.addEventListener('DOMContentLoaded', bindButtons);
+	document.addEventListener('DOMContentLoaded', hideDivs);
+
+	function bindButtons(){
+		document.getElementById('uploadFile').addEventListener('click', getData);
+}
+
+	function hideDivs(){
+		document.getElementById('resultContent').style.display = "none";
+	}
+	
+	function unhideData(){
+		document.getElementById('resultContent').style.display = "block";
+		document.getElementById('startContent').style.display = "none";
+	}
+
+function getData(){
+	var fileName = document.getElementById('filename').value;
+	var data = new FormData();
+	data.append("url", fileName);
+	data.append("apikey", "290e936a-b103-4fd2-8ddb-6934a4a27e1e");
+
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function () {
+	  if (this.readyState === 4) {
+		document.getElementById('result').innerHTML=this.responseText;
+	  }
+	});
+
+	xhr.open("POST", "https://api.havenondemand.com/1/api/sync/viewdocument/v1");
+
+	xhr.send(data);
+	}
+	
+	
+	function parseFormCreation(){
+		var i;
+		var stringPair;
+		
+		$("#result div").each(function(){
+			
+			stringPair = $( this ).text().split(":");
+			if(stringPair[1]!=null){
+				$( this).html(stringPair[0] + ': <input type="text" name="' + stringPair[0] + '"></input>');
+			}
+		});
+	}
+	
+	function addToFields(selectedUser){
+		if(selectedUser)
+			userName=selectedUser;
+		else console.log("Error");
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/"+userName);
+		
+		firebaseDB.on("value",function(snap){
+			
+			outputJSON = snap.val();
+			console.log(outputJSON);
+			$("#result input").each(function(){
+				currAttr = $(this).attr('name').replace(/[.,\/#!\"-$%\^&'?\*;:{}=\-_`’~–()]/g,"");
+				if (outputJSON.hasOwnProperty(currAttr))
+					$( this ).val( outputJSON[currAttr] );
+			});
+		},function(errorObject){
+			console.log("READ FAILED: "+errorObject.code);
+		});
+	}
+	
+	function parseFormSubmission(){
+		$('#myModal').modal('hide');
+		unhideData();
+		var i;
+		var jsonString='{"name":"' + userName + '"';
+		
+		$("#result input").each(function(){
+			var splitPair;
+			var attrName = $( this ).attr('name');
+			attrName = attrName.replace(/[.,\/#!-\"?$%\^&\*;:{}=\-_`~'’–()]/g,"");
+			
+			jsonString += ',"' + attrName;
+			jsonString += '":"';
+			jsonString += $( this ).val()+'"';
+			
+		});
+		
+		jsonString += '}';
+		
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/"+userName);
+		console.log(jsonString);
+		firebaseDB.update(JSON.parse(jsonString));
+	}
+	
+	function populateFamily(){
+		var firebaseDB = new Firebase("https://amber-heat-3882.firebaseio.com/FAMILY_REF");
+		
+		firebaseDB.on("value",function(snap){
+			
+			outputJSON = snap.val();
+			console.log(outputJSON);
+			var i=0
+			for(i;outputJSON[i]!=null;i++){
+				$("#invisidiv").append( '<div class="fam_select" id="fs'+i+'"><p>' + outputJSON[i] + '</p></div>' );
+				$("#fs"+i).click(function(){
+					parseFormCreation();
+					console.log($(this).text());
+					addToFields($(this).text());
+					slideBarRight();
+				});
+			
+			}
+			
+		},function(errorObject){
+			console.log("READ FAILED: "+errorObject.code)
+		});
+	}
+	
+	function slideBarRight(){
+		$("#invisidiv").animate({left:"110%"},600,function(){
+			$("#maximizeBar").show();
+			$("#maximizeBar").click(function(){
+				slideBarOut();
+			});
+		});
+	}
+	
+	function slideBarOut(){
+		$("#maximizeBar").hide();
+		$("#invisidiv").animate({left:"100%"},600,function(){
+			
+		});
+	}
+	
+	populateFamily();
+	
+	</script>
+	<style>
+		#invisidiv{
+			position:fixed;
+			top:50%;
+			left:100%;
+			transform:translate(-100%,-50%);
+		}
+	
+		.fam_select{
+			position:relative;
+			display:inline-block;
+			background-color:black;
+			
+			text-align:center;
+			
+			margin-top:1em;
+			width:5em;
+			height:5em;
+			
+			color:white;
+			border:.2em solid black;
+			border-radius:50%;
+		}.fam_select:hover{
+			background-color:white;
+			border:.2em solid black;
+
+		}
+		#maximizeBar{
+			position:fixed;
+			float:right;
+			
+			width:2em;
+			height:2em;
+			top:50%;
+			left:100%;
+			transform:translate(-100%,-50%);
+			
+			color:white;
+			background-color:black;
+		}#submitButton{
+			position:fixed;
+			left:85%;
+			top:85%;
+			width:10%;
+			height:10%;
+		}#addForm{
+			position: absolute;
+			right: 300px;
+			top: 5px;
+		}#FrontPic{
+		position:absolute;
+			height:100%;
+			width:100%;
+		}
+	</style>
   </head>
   <body>
 		<nav class="navbar navbar-default">
@@ -29,7 +224,7 @@
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav navbar-right">
-		        <li><button style="margin-top:7px;border: 2px solid #55b97a;font-weight:bold" class="btn btn-default">Fill A Form</button></li>
+		        <li><button style="margin-top:7px;border: 2px solid #55b97a;font-weight:bold" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">Fill A Form</button></li>
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Frances <span class="caret"></span></a>
 		          <ul class="dropdown-menu">
@@ -44,7 +239,7 @@
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
 		</nav>
-		<div class="row">
+		<div class="row" id="startContent">
 			<div style="text-align:center;" class="col-sm-8">
 				<a href="#"><img src="/images/family_thumbs/Family_1.png" style="width:600px;margin-bottom:15px"/></a>
 				<a href="#"><img src="/images/family_thumbs/Family_2.png" style="width:600px;margin-bottom:15px"/></a>
@@ -55,7 +250,7 @@
 			</div>
 			<div style="text-align:left" class="col-sm-4">
 				<div style="margin-bottom:20px">
-					Forms <a><i class="fa fa-plus-circle"></i></a>
+					Forms <a data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i></a>
 				</div>
 				<a href="#"><div class="panel panel-default" style="background-color: #d8d8d8;width:200px;margin-bottom:15px">
 				  <div class="panel-body">St. Monica field trip</div>
@@ -68,6 +263,32 @@
 				</div></a>
 			</div>
 		</div>
-
+		<div id="resultContent" style="display:none">
+			<div id="result"></div>
+			<div id="invisidiv"></div>
+			<div id="maximizeBar" hidden>+</div>
+		</div>
+		
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Please select the form file to upload</h4>
+	      </div>
+	      <div class="modal-body">
+			<input type="text" id="filename" value="http://web.engr.oregonstate.edu/~broedera/onedayfieldtripb.pdf" style="width:100%"></input>
+			<label><button type="submit" id = "uploadFile">Upload</button>
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="parseFormSubmission();">Submit</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
   </body>
 </html>
