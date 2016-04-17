@@ -1,0 +1,115 @@
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+img {
+  max-width: 100%; /* if window changes, the image changes with it */ 
+  
+}
+
+
+
+h3 {
+  margin: 0 0 1em 0; /* to make sure there is a space between the bottom (important for desktop)*/
+}
+
+/****************
+HEADING
+ ****************/
+header {
+  float: left;            /* floating left is good for desktop*/
+  margin: 0 0 30px 0;     /*clockwise separated from other content (bottom) and removes problematic margins on top*/
+  padding: 5px 5px 0 0;     /* separating text without removing margin from top of page*/
+  width: 100%;            /*floating elements doesn't have a specific width*/
+}
+
+#logo {
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+ font-family: 'Changa One', sans-serif;
+  margin: 15px 0;
+  font-size: 1.75em;
+  font-weight: normal;
+  line-height: 0.8em;
+}
+
+/****************
+NAVIGATION
+****************/
+#topbar {
+	position:absolute;
+	text-align: center;
+	height:40em;
+	width:100%;
+	background-color:black;
+}
+
+.bodyBG{
+	width:100%;
+}
+#topBody{
+	position:absolute;
+	top:40em;
+	height:40em;
+	background-color:purple;
+}
+#midBody{
+	position:absolute;
+	top:80em;
+	height:35em;
+	background-color:green;
+}
+#lowBody{
+	position:absolute;
+	top:115em;
+	height:25em;
+	background-color:yellow;
+}
+
+/****************
+FOOTER
+ ****************/
+footer {
+	position:absolute;
+	top:140em;
+	width:100%;
+	height:65em;
+	background-color:rgb(243, 243, 243);
+}
+
+
+/****************
+PAGE: PORTFOLIO
+ ****************/
+.gallery {
+	position:absolute;
+	top:50%;
+	width:100%;
+	transform:translate(0%,-50%);
+  margin:0%;
+  padding:0%;
+
+  list-style: none;        /* removes bullet points for lists */
+}
+
+.gallery div {
+	  /* makes elements appear side by side */
+	position:relative;
+	display:inline-block;
+	height:16em;
+	width:16em;
+	margin:2.5%;   /* 2.5% on both sides of the image, times 4, totalling 10 percent*/
+	color: #bdc3c7;
+	border-radius:100%;
+  
+}
+.gallery div a img{
+	height:16em;
+	width:16em;
+}
+
+
+
