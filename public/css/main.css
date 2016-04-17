@@ -99,16 +99,21 @@ PAGE: PORTFOLIO
 	  /* makes elements appear side by side */
 	position:relative;
 	display:inline-block;
-	height:16em;
-	width:16em;
+	height:15em;
+	width:13em;
 	margin:2.5%;   /* 2.5% on both sides of the image, times 4, totalling 10 percent*/
 	color: #bdc3c7;
-	border-radius:100%;
+
   
 }
+
+
+
 .gallery div a img{
 	height:16em;
 	width:16em;
+  border-radius: 50%;
+  border: dotted grey;
 }
 
 
