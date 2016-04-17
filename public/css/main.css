@@ -17,7 +17,6 @@ h3 {
 HEADING
  ****************/
 header {
-  float: left;            /* floating left is good for desktop*/
   margin: 0 0 30px 0;     /*clockwise separated from other content (bottom) and removes problematic margins on top*/
   width: 100%;            /*floating elements doesn't have a specific width*/
 }
@@ -43,14 +42,20 @@ h1 {
 NAVIGATION
 ****************/
 #topbar {
-
-	position:absolute;
-  padding-top: 11%;
+  	padding-top: 11%;
 	text-align: center;
 	height:40em;
 	width:100%;
 	background-image: url(../img/Kids.png);
-	background-size: 100%;
+	background-size: cover;
+}
+
+.formbgblock {
+	text-align: center;
+	height:40em;
+	width:100%;
+	background-image: url(../img/Forms.png);
+	background-size: cover;
 }
 
 .bodyBG{
