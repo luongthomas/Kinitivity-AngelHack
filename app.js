@@ -66,9 +66,8 @@ app.get('/first', function(req,res){
 });
 
 // Redirect
-app.get('/html?lg_username=parentuser&lg_password=secretpassword', function(req,res){
-    var context = {};
-    res.render('count', context);
+app.get('/submit', function(req,res){
+    res.sendFile(path.join(__dirname + '/submit.html'));
 });
 
 app.get('/html', function(req, res) {
