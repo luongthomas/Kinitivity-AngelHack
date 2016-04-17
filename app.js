@@ -75,8 +75,8 @@ app.get('/first', function(req,res){
 });
 
 // Redirect
-app.get('/submit', function(req,res){
-    res.sendFile(path.join(__dirname + '/submit.html'));
+app.get('/APIFrame2', function(req,res){
+    res.sendFile(path.join(__dirname + '/APIFrame2.html'));
 });
 
 app.get('/html', function(req, res) {
