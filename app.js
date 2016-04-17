@@ -53,8 +53,7 @@ app.use(express.static(__dirname + '/public')); // tells express where to go for
 
 // Main index page
 app.get('/', function(req,res){
-    var context = {}; 
-    res.render('index', context);
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 // Counter test page
