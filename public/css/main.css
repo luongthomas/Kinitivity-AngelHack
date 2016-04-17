@@ -61,7 +61,11 @@ NAVIGATION
 	top:40em;
 	height:40em;
 	background-color:purple;
+  background-image: url(../img/Forms.png);
 }
+
+
+
 #midBody{
 	position:absolute;
 	top:80em;
@@ -122,7 +126,7 @@ PAGE: PORTFOLIO
   border: dotted grey;
 }
 
-
+/*
 body {
   background: -webkit-gradient(linear,
     left top,
@@ -133,4 +137,4 @@ body {
   background: -moz-linear-gradient(top, #fff 0%, #000 100%);
   background: linear-gradient(top, #fff 0%, #000 100%);
 }
-
+*/
