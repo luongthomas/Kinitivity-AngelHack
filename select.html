@@ -117,7 +117,7 @@ function getData(){
 			console.log(outputJSON);
 			var i=0
 			for(i;outputJSON[i]!=null;i++){
-				$("#invisidiv").append( '<div class="fam_select" id="fs'+i+'"><p>' + outputJSON[i] + '</p></div>' );
+				$("#invisidiv").append( '<div class="fam_select" id="fs'+i+'">' + outputJSON[i] + '</div>' );
 				$("#fs"+i).click(function(){
 					parseFormCreation();
 					console.log($(this).text());
@@ -173,8 +173,9 @@ function getData(){
 			color:white;
 			border:.2em solid black;
 			border-radius:50%;
+			line-height:4.5em;
 		}.fam_select:hover{
-			background-color:white;
+			background-color:grey;
 			border:.2em solid black;
 
 		}
