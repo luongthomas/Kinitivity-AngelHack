@@ -56,6 +56,10 @@ app.get('/', function(req,res){
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/select', function(req,res){
+    res.sendFile(path.join(__dirname + '/select.html'));
+});
+
 // Counter test page
 app.get('/count', function(req,res){
     var context = {};
