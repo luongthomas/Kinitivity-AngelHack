@@ -17,7 +17,6 @@ h3 {
 HEADING
  ****************/
 header {
-  margin: 0 0 30px 0;     /*clockwise separated from other content (bottom) and removes problematic margins on top*/
   width: 100%;            /*floating elements doesn't have a specific width*/
 }
 
@@ -50,23 +49,23 @@ NAVIGATION
 	background-size: cover;
 }
 
-.formbgblock {
-	text-align: center;
-	height:40em;
-	width:100%;
-	background-image: url(../img/Forms.png);
-	background-size: cover;
-}
-
 .bodyBG{
 	width:100%;
 }
 #topBody{
-	position:absolute;
 	top:40em;
 	height:40em;
 	background-color:purple;
+  background-image: url(../img/Forms.png);
 }
+
+.centerText {
+  font-weight: 400;
+
+  padding: 16% 5% 0% 5%;
+  text-align: center;
+}
+
 #midBody{
 	position:absolute;
 	top:80em;
