@@ -46,10 +46,11 @@ NAVIGATION
 #topbar {
 
 	position:absolute;
+  padding-top: 11%;
 	text-align: center;
 	height:40em;
 	width:100%;
-	background-image: url(../img/Kids.jpg);
+	background-image: url(../img/Kids.png);
 }
 
 .bodyBG{
