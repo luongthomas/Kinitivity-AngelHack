@@ -19,6 +19,7 @@ HEADING
 header {
   float: left;            /* floating left is good for desktop*/
   margin: 0 0 30px 0;     /*clockwise separated from other content (bottom) and removes problematic margins on top*/
+  padding: 5px 5px 0 0;     /* separating text without removing margin from top of page*/
   width: 100%;            /*floating elements doesn't have a specific width*/
 }
 
@@ -50,7 +51,6 @@ NAVIGATION
 	height:40em;
 	width:100%;
 	background-image: url(../img/Kids.png);
-	background-size: 100%;
 }
 
 .bodyBG{
@@ -64,7 +64,12 @@ NAVIGATION
   background-image: url(../img/Forms.png);
 }
 
+.centerText {
+  font-weight: 400;
 
+  padding: 16% 5% 0% 5%;
+  text-align: center;
+}
 
 #midBody{
 	position:absolute;
@@ -126,7 +131,7 @@ PAGE: PORTFOLIO
   border: dotted grey;
 }
 
-/*
+
 body {
   background: -webkit-gradient(linear,
     left top,
@@ -137,4 +142,4 @@ body {
   background: -moz-linear-gradient(top, #fff 0%, #000 100%);
   background: linear-gradient(top, #fff 0%, #000 100%);
 }
-*/
+
