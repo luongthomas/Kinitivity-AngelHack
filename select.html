@@ -48,6 +48,8 @@ function getData(){
 	xhr.open("POST", "https://api.havenondemand.com/1/api/sync/viewdocument/v1");
 
 	xhr.send(data);
+			$('#myModal').modal('hide');
+		unhideData();
 	}
 	
 	
@@ -85,8 +87,7 @@ function getData(){
 	}
 	
 	function parseFormSubmission(){
-		$('#myModal').modal('hide');
-		unhideData();
+
 		var i;
 		var jsonString='{"name":"' + userName + '"';
 		
@@ -275,6 +276,7 @@ function getData(){
 			<div id="result" style="position:relative;"></div>
 			<div id="invisidiv"></div>
 			<div id="maximizeBar" hidden>+</div>
+			<button id="submitButton" onclick="parseFormSubmission();">Submit</button>
 		</div>
 		
 	</div>
@@ -293,7 +295,7 @@ function getData(){
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="parseFormSubmission();">Submit</button>
+	        
 	      </div>
 	    </div>
 	  </div>
