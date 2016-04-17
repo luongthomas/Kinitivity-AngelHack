@@ -8,6 +8,12 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
+// Import connect for blur effect and nib
+// var connect = require('connect')
+//   , stylus = require('stylus')
+//   , nib = require('nib');
+
+
 // Import body-parser / setup (middleware for parsing POST content)
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
