@@ -1,0 +1,33 @@
+{
+  "name": "kintivity",
+  "version": "1.0.0",
+  "description": "Kintivity on Heroku",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "express-handlebars": "^3.0.0",
+    "body-parser": "^1.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luongthomas/Kintivity.git"
+  },
+  "keywords": [
+    "kintivity",
+    "hackathon",
+    "seattle",
+    "heroku"
+  ],
+  "author": "Thomas Luong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luongthomas/Kintivity/issues"
+  },
+  "homepage": "https://github.com/luongthomas/Kintivity#readme"
+}
