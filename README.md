@@ -2,11 +2,9 @@
 A demo page of a service which uses the HPE OnHaven API to allow an upload of a PDF (from a link) and have it generate a fillable form. The fillable form can be filled automatically based off previously submitted forms and even personalized for each profile.
 
 ## Installation
-```npm install 
-```
+```npm install ```
 
-```node start
-```
+```node start```
 
 ## Usage
 Using the pre-login values on the webpage, you may login and submit a link of any PDF file and it will parse it.  
